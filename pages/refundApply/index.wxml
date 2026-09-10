@@ -1,0 +1,26 @@
+<view class="page">
+  <block wx:if="{{exists}}">
+    <view class="status-card">
+      <view class="status-title" wx:if="{{exists.status === 1}}">退款申请处理中</view>
+      <view class="status-title done" wx:elif="{{exists.status === 2}}">已同意退款</view>
+      <view class="status-title rejected" wx:elif="{{exists.status === 3}}">退款申请被拒绝</view>
+      <view class="status-reason">申请原因：{{exists.reason}}</view>
+      <view class="status-reason" wx:if="{{exists.adminRemark}}">商家备注：{{exists.adminRemark}}</view>
+      <view class="status-amount">退款金额：¥{{exists.refundAmount}}</view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="card">
+      <view class="row">
+        <text class="label">退款金额</text>
+        <text class="amount">¥{{amount}}</text>
+      </view>
+      <view class="row">
+        <text class="label">申请原因</text>
+      </view>
+      <textarea class="reason-input" placeholder="请填写退款原因（必填）" value="{{reason}}" bindinput="onReasonInput" maxlength="200"></textarea>
+      <button class="submit-btn" bindtap="submit" disabled="{{submitting}}">{{submitting ? '提交中...' : '提交申请'}}</button>
+    </view>
+    <view class="tip">提交后商家会尽快处理，同意退款后金额将原路退回。</view>
+  </block>
+</view>

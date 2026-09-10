@@ -86,7 +86,7 @@
 }
 .my-center .container .address_order.data-v-0be17cc6 {
   width: 710rpx;
-  height: 200rpx;
+  height: 400rpx;
   margin: 20rpx auto;
   margin-top: 0;
 }

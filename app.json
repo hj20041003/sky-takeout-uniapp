@@ -10,7 +10,15 @@
     "pages/remark/index",
     "pages/my/my",
     "pages/addOrEditAddress/addOrEditAddress",
-    "pages/historyOrder/historyOrder"
+    "pages/historyOrder/historyOrder",
+    "pages/aiChat/aiChat",
+    "pages/coupon/index",
+    "pages/myCoupon/index",
+    "pages/couponSelect/index",
+    "pages/search/index",
+    "pages/hotSales/index",
+    "pages/refundApply/index",
+    "pages/comment/index"
   ],
   "subPackages": [],
   "window": {

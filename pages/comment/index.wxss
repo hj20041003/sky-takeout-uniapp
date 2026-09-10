@@ -1,0 +1,69 @@
+.page {
+  padding: 24rpx;
+  background: #f5f6f7;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 36rpx 30rpx;
+  margin-bottom: 24rpx;
+}
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+.stars {
+  display: flex;
+  justify-content: center;
+}
+.star {
+  font-size: 64rpx;
+  color: #ddd;
+  margin: 0 10rpx;
+}
+.star.on {
+  color: #ff9800;
+}
+.score-text {
+  text-align: center;
+  color: #ff9800;
+  font-size: 28rpx;
+  margin-top: 16rpx;
+}
+.content-input {
+  width: 100%;
+  height: 200rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  margin-top: 30rpx;
+  box-sizing: border-box;
+}
+.submit-btn {
+  margin-top: 40rpx;
+  background: #e95f3c;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 44rpx;
+}
+.submit-btn[disabled] {
+  background: #f0a08c;
+  color: #fff;
+}
+.content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+.time {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: right;
+}

@@ -445,6 +445,18 @@ var _index = __webpack_require__(/*! @/utils/index.js */ 29);function _interopRe
     closePopup: function closePopup(type) {
       this.$refs.commonPopup.close(type);
     },
+    // 申请退款
+    goRefund: function goRefund(id) {
+      uni.navigateTo({
+        url: '/pages/refundApply/index?orderId=' + id });
+
+    },
+    // 去评价
+    goComment: function goComment(id) {
+      uni.navigateTo({
+        url: '/pages/comment/index?orderId=' + id });
+
+    },
     // 返回我的
     goBack: function goBack() {
       uni.redirectTo({

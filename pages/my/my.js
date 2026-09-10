@@ -380,6 +380,16 @@ var _index = __webpack_require__(/*! @/utils/index.js */ 29);function _interopRe
         url: '/pages/historyOrder/historyOrder' });
 
     },
+    goCoupon: function goCoupon() {
+      uni.navigateTo({
+        url: '/pages/coupon/index' });
+
+    },
+    goMyCoupon: function goMyCoupon() {
+      uni.navigateTo({
+        url: '/pages/myCoupon/index' });
+
+    },
     oneOrderFun: function oneOrderFun(id) {return _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var pages, routeIndex;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
                 pages = getCurrentPages();
                 routeIndex = pages.findIndex(function (item) {return item.route === 'pages/index/index';});

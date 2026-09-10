@@ -4494,6 +4494,18 @@ var _index = __webpack_require__(/*! ../../utils/index.js */ 29);function _inter
                     }
                   }).catch(function (err) {}));case 2:case "end":return _context7.stop();}}}, _callee7);}))();
     },
+    // 商品搜索入口
+    goSearch: function goSearch() {
+      uni.navigateTo({
+        url: '/pages/search/index' });
+
+    },
+    // 热销榜入口
+    goHot: function goHot() {
+      uni.navigateTo({
+        url: '/pages/hotSales/index' });
+
+    },
     // 去订单页面
     goOrder: function goOrder() {
       uni.navigateTo({
@@ -21897,7 +21909,10 @@ var _default = {
       weeks: [],
       scrollTop: 0,
       addressList: [],
-      isHandlePy: false };
+      isHandlePy: false,
+      couponCount: 0,
+      couponSelected: false,
+      couponDiscount: 0 };
 
   },
   computed: {
@@ -21978,6 +21993,9 @@ var _default = {
 
 
 
+  },
+  onShow: function onShow() {
+    this.refreshCoupon();
   },
   onReady: function onReady() {var _this2 = this;
     uni.getSystemInfo({
@@ -22097,6 +22115,71 @@ var _default = {
       this.openPayType = false;
     },
     // 支付下单
+    refreshCoupon: function refreshCoupon() {
+      var picked = uni.getStorageSync('couponPicked');
+      if (picked) {
+        uni.removeStorageSync('couponPicked');
+        var cid = Number(uni.getStorageSync('selectedCouponId') || 0);
+        var disc = Number(uni.getStorageSync('selectedCouponDiscount') || 0);
+        uni.removeStorageSync('selectedCouponId');
+        uni.removeStorageSync('selectedCouponDiscount');
+        this._couponId = cid > 0 ? cid : null;
+        this._couponDisc = cid > 0 ? disc : 0;
+      }
+      if (this._couponId) {
+        this.couponSelected = true;
+        this.couponDiscount = this._couponDisc || 0;
+      } else {
+        this.couponSelected = false;
+        this.couponDiscount = 0;
+      }
+      var that = this;
+      uni.request({
+        url: 'http://localhost:8080/user/coupon/available',
+        method: 'GET',
+        data: { amount: this.orderDishPrice || 0 },
+        header: this.couponHeader(),
+        success: function (res) {
+          if (res.data && res.data.code === 1) {
+            var list = res.data.data || [];
+            that.couponCount = list.length;
+            if (that._couponId) {
+              var still = false;
+              for (var i = 0; i < list.length; i++) {
+                if (String(list[i].id) === String(that._couponId)) { still = true; break; }
+              }
+              if (!still) {
+                that._couponId = null;
+                that._couponDisc = 0;
+                that.couponSelected = false;
+                that.couponDiscount = 0;
+              }
+            }
+          } else {
+            that.couponCount = 0;
+          }
+        },
+        fail: function () {
+          that.couponCount = 0;
+        }
+      });
+    },
+    couponHeader: function couponHeader() {
+      try {
+        var app = getApp();
+        if (app && app.$vm && app.$vm.$store && app.$vm.$store.state.token) {
+          return { 'authentication': app.$vm.$store.state.token };
+        }
+      } catch (e) {}
+      var token = '';
+      try { token = uni.getStorageSync('token') || ''; } catch (e) {}
+      return token ? { 'authentication': token } : {};
+    },
+    goCouponSelect: function goCouponSelect() {
+      uni.navigateTo({
+        url: '/pages/couponSelect/index?amount=' + (this.orderDishPrice || 0) });
+
+    },
     payOrderHandle: function payOrderHandle() {var _params,_this7 = this;
       this.isHandlePy = true;
 
@@ -22105,8 +22188,11 @@ var _default = {
           title: '请选择收货地址',
           icon: 'none' });
 
+        this.isHandlePy = false;
         return false;
       }
+
+
       var num = null;
       var status = null;
 
@@ -22126,6 +22212,8 @@ var _default = {
 
       console.log(this.arrivalTime, params);
 
+      if (this._couponId) { params.userCouponId = this._couponId; }
+
       (0, _api.submitOrderSubmit)(params).then(function (res) {
         if (res.code === 1) {
           _this7.isHandlePy = false;
@@ -22140,6 +22228,7 @@ var _default = {
             title: res.msg || '操作失败',
             icon: 'none' });
 
+          _this7.isHandlePy = false;
         }
       });
     },
@@ -28486,7 +28575,10 @@ var _default = {
       activeRadio: 0,
       time: null,
       isPayment: false,
-      times: null };
+      times: null,
+      timelineSteps: [],
+      commentInfo: null,
+      refundInfo: null };
 
   },
   computed: {
@@ -28533,6 +28625,8 @@ var _default = {
       (0, _api.getOrderDetail)(id).then(function (res) {
         if (res.code === 1) {
           _this.orderDetailsData = res.data;
+          _this.buildTimeline(res.data);
+          _this.loadCommentStatus(res.data);
           _this.initdishListMut(_this.orderDetailsData.orderDetailList);
           if (_this.orderDetailsData.status === 1) {
             _this.runTimeBack(_this.orderDetailsData.orderTime);
@@ -28657,6 +28751,65 @@ var _default = {
     },
     openPopuos: function openPopuos(type) {
       this.$refs.commonPopup.open(type);
+    },
+    // 构建“订单进度”状态轴数据
+    buildTimeline: function buildTimeline(orders) {
+      var steps = [];
+      if (orders.status === 6 || orders.payStatus === 2) {
+        steps.push({ title: '提交订单', time: orders.orderTime, done: true });
+        if (orders.payStatus !== 0 && orders.checkoutTime) {
+          steps.push({ title: '支付成功', time: orders.checkoutTime, done: true });
+        }
+        steps.push({ title: orders.payStatus === 2 ? '商家已退款' : '订单已取消', time: orders.cancelTime, done: true });
+        this.timelineSteps = steps;
+        return;
+      }
+      steps.push({ title: '提交订单', time: orders.orderTime, done: true });
+      steps.push({ title: '支付成功', time: orders.status >= 2 ? orders.checkoutTime : '', done: orders.status >= 2 });
+      steps.push({ title: '商家接单', time: orders.status >= 3 ? orders.acceptTime : '', done: orders.status >= 3 });
+      steps.push({ title: '订单派送中', time: '', done: orders.status >= 4 });
+      steps.push({ title: '交易完成', time: orders.status >= 5 ? orders.deliveryTime : '', done: orders.status >= 5 });
+      this.timelineSteps = steps;
+    },
+    // 查询当前订单的退款申请与评价状态
+    loadCommentStatus: function loadCommentStatus(orders) {
+      var that = this;
+      var header = {};
+      try { header = { 'authentication': getApp().$vm.$store.state.token || '' }; } catch (e) {}
+      uni.request({
+        url: 'http://localhost:8080/user/refund/status?orderId=' + orders.id,
+        method: 'GET',
+        header: header,
+        success: function (res) {
+          if (res.data && res.data.code === 1) {
+            that.refundInfo = res.data.data || null;
+          }
+        }
+      });
+      if (orders.status === 5) {
+        uni.request({
+          url: 'http://localhost:8080/user/comment/byOrder?orderId=' + orders.id,
+          method: 'GET',
+          header: header,
+          success: function (res) {
+            if (res.data && res.data.code === 1) {
+              that.commentInfo = res.data.data || null;
+            }
+          }
+        });
+      }
+    },
+    // 申请退款
+    goRefund: function goRefund() {
+      uni.navigateTo({
+        url: '/pages/refundApply/index?orderId=' + this.orderDetailsData.id + '&amount=' + this.orderDetailsData.amount });
+
+    },
+    // 去评价
+    goComment: function goComment() {
+      uni.navigateTo({
+        url: '/pages/comment/index?orderId=' + this.orderDetailsData.id });
+
     },
     // 联系商家进行退款弹层
     handleRefund: function handleRefund(type) {

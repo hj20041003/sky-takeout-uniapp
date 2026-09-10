@@ -1,0 +1,25 @@
+<view class="ai-page" style="height:{{scrollH}}px">
+  <scroll-view class="msg-box" scroll-y="true" scroll-into-view="{{scrollTo}}" scroll-with-animation="true">
+    <block wx:for="{{messages}}" wx:key="index">
+      <view id="msg{{index}}" class="row {{item.role}}">
+        <view class="bubble {{item.role}}">{{item.text}}</view>
+      </view>
+    </block>
+    <view wx:if="{{loading}}" class="row ai">
+      <view class="bubble ai">正在思考…</view>
+    </view>
+  </scroll-view>
+
+  <view class="input-bar">
+    <input
+      class="ipt"
+      value="{{input}}"
+      placeholder="问点什么，比如：你们几点营业"
+      confirm-type="send"
+      disabled="{{loading}}"
+      bindinput="onInput"
+      bindconfirm="send"
+    />
+    <button class="btn" disabled="{{loading}}" bindtap="send">{{loading ? '发送中' : '发送'}}</button>
+  </view>
+</view>

@@ -1,0 +1,30 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+
+  <view wx:elif="{{list.length === 0}}" class="empty">当前订单暂无可用优惠券</view>
+
+  <block wx:else>
+    <view class="tip">以下优惠券可用于本单（¥{{amount}}）</view>
+    <view class="coupon" wx:for="{{list}}" wx:key="id" data-id="{{item.id}}" bindtap="onPick">
+      <view class="left">
+        <block wx:if="{{item.type === 2}}">
+          <view class="value"><text class="num">{{item.discountAmount}}</text><text class="unit">折</text></view>
+        </block>
+        <block wx:else>
+          <view class="value"><text class="rmb">¥</text><text class="num">{{item.discountAmount}}</text></view>
+        </block>
+        <view class="threshold" wx:if="{{item.type === 1}}">满{{item.thresholdAmount}}可用</view>
+        <view class="threshold" wx:elif="{{item.type === 3}}">无门槛</view>
+        <view class="threshold" wx:else>折扣券</view>
+      </view>
+      <view class="right">
+        <view class="name">{{item.name}}</view>
+        <view class="time">有效期至 {{item.useEndTime}}</view>
+        <view class="save" wx:if="{{item.discount > 0}}">本单可省 ¥{{item.discount}}</view>
+      </view>
+      <view class="pick">立即使用</view>
+    </view>
+  </block>
+
+  <view class="no-coupon" bindtap="onNoCoupon">不使用优惠券</view>
+</view>

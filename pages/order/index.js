@@ -146,7 +146,8 @@ var render = function() {
   })
 
   var g1 = _vm.orderDishPrice.toFixed(2)
-  var g2 = _vm.orderDishPrice.toFixed(2)
+  var g2 = (_vm.orderDishPrice - (_vm.couponSelected ? _vm.couponDiscount : 0)).toFixed(2)
+  var g3 = _vm.couponSelected ? '-￥' + Number(_vm.couponDiscount).toFixed(2) : (_vm.couponCount > 0 ? _vm.couponCount + '张可用' : '暂无可用')
 
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
@@ -160,7 +161,8 @@ var render = function() {
       $root: {
         l0: l0,
         g1: g1,
-        g2: g2
+        g2: g2,
+        g3: g3
       }
     }
   )

@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="tabs">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="status"
+      class="tab {{currentStatus === item.status ? 'active' : ''}}"
+      data-status="{{item.status}}"
+      bindtap="switchTab"
+    >{{item.label}}</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+
+  <view wx:elif="{{list.length === 0}}" class="empty">
+    <view>暂无相关优惠券</view>
+    <view class="go-btn" bindtap="goCoupon">去领券中心看看</view>
+  </view>
+
+  <block wx:else>
+    <view class="coupon {{item.status !== 1 ? 'gray' : ''}}" wx:for="{{list}}" wx:key="id">
+      <view class="left">
+        <block wx:if="{{item.type === 2}}">
+          <view class="value"><text class="num">{{item.discountAmount}}</text><text class="unit">折</text></view>
+        </block>
+        <block wx:else>
+          <view class="value"><text class="rmb">¥</text><text class="num">{{item.discountAmount}}</text></view>
+        </block>
+        <view class="threshold" wx:if="{{item.type === 1}}">满{{item.thresholdAmount}}可用</view>
+        <view class="threshold" wx:elif="{{item.type === 3}}">无门槛</view>
+        <view class="threshold" wx:else>折扣券</view>
+      </view>
+      <view class="right">
+        <view class="name">{{item.name}}</view>
+        <view class="time">有效期至 {{item.useEndTime}}</view>
+        <view class="time" wx:if="{{item.status === 2}}">核销时间 {{item.usedTime}}</view>
+        <view class="time" wx:elif="{{item.status === 3}}">已过期</view>
+      </view>
+      <view class="stamp">{{item.status === 1 ? '未使用' : item.status === 2 ? '已使用' : '已过期'}}</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="head">热销榜 · 按已完成订单销量实时统计 TOP10</view>
+
+  <view wx:if="{{loading}}" class="tip">加载中...</view>
+  <view wx:elif="{{list.length === 0}}" class="tip">暂无销量数据</view>
+
+  <view class="rank-item" wx:for="{{list}}" wx:key="name">
+    <view class="rank-num {{index === 0 ? 'top1' : (index === 1 ? 'top2' : (index === 2 ? 'top3' : ''))}}">{{index + 1}}</view>
+    <image class="rank-img" src="{{item.image}}" mode="aspectFill"></image>
+    <view class="rank-info">
+      <view class="rank-name">{{item.name}}</view>
+      <view class="rank-meta">
+        <text wx:if="{{item.avgScore}}" class="score">★ {{item.avgScore}}分</text>
+        <text class="sales">已售 {{item.saleNum}} 份</text>
+      </view>
+      <view class="rank-price">¥{{item.price}}</view>
+    </view>
+  </view>
+
+  <view class="bottom-entry" bindtap="goSearch">没找到想要的？去搜索 ›</view>
+</view>
