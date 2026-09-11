@@ -64,11 +64,48 @@ Page({
       uni.showToast({ title: '该菜品已售罄', icon: 'none' });
       return;
     }
+    var that = this;
+    // 社区生鲜：先查该商品有没有多规格，有则让用户选一个再入车
+    uni.request({
+      url: BASE_URL + '/user/dish/skus',
+      method: 'GET',
+      header: getHeader(),
+      data: { dishId: dishId },
+      success: function (res) {
+        var skus = (res.data && res.data.data) || [];
+        if (!skus.length) {
+          that.doAddCart(dishId, null);
+          return;
+        }
+        var names = skus.map(function (s) {
+          return s.skuName + '  ¥' + s.price;
+        });
+        uni.showActionSheet({
+          itemList: names,
+          success: function (r) {
+            that.doAddCart(dishId, skus[r.tapIndex].id);
+          },
+          fail: function () {}
+        });
+      },
+      fail: function () {
+        // 查询规格失败不阻塞加购，退回原逻辑
+        that.doAddCart(dishId, null);
+      }
+    });
+  },
+
+  // 实际加购：skuId 为空表示标品
+  doAddCart: function (dishId, skuId) {
+    var data = { dishId: dishId };
+    if (skuId) {
+      data.skuId = skuId;
+    }
     uni.request({
       url: BASE_URL + '/user/shoppingCart/add',
       method: 'POST',
       header: getHeader(),
-      data: { dishId: dishId },
+      data: data,
       success: function (res) {
         if (res.data && res.data.code === 1) {
           uni.showToast({ title: '已加入购物车', icon: 'success' });

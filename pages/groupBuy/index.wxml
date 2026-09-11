@@ -1,0 +1,26 @@
+<view class="gb-page">
+  <view wx:if="{{loading}}" class="gb-loading">加载中...</view>
+
+  <block wx:if="{{!loading && list.length > 0}}">
+    <view class="gb-card" wx:for="{{list}}" wx:key="id">
+      <view class="gb-top">
+        <view class="gb-name">{{item.dishName || '拼团商品'}}</view>
+        <view class="gb-tag">{{item.requiredNum}}人成团</view>
+      </view>
+      <view class="gb-mid">
+        <view class="gb-price"><text class="ico">￥</text>{{item.groupPrice}}<text class="gb-origin">拼团价</text></view>
+        <view class="gb-time">截止 {{item.endTime}}</view>
+      </view>
+      <view class="gb-btns">
+        <view class="gb-btn gb-btn-open" data-id="{{item.id}}" bindtap="openTeam">开新团</view>
+        <view class="gb-btn gb-btn-join" data-id="{{item.id}}" bindtap="joinTeam">加入进行中的团</view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{!loading && list.length === 0}}" class="gb-empty">
+    <view class="gb-empty-icon">🍅</view>
+    <view>暂时没有进行中的拼团活动</view>
+    <view class="gb-empty-sub">去看看其他商品吧</view>
+  </view>
+</view>

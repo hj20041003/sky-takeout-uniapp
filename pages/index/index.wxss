@@ -164,14 +164,14 @@
   display: flex;
   width: 100%;
   height: calc(100vh - 260rpx);
-  margin-top: 135rpx;
+  margin-top: 20rpx;
 }
 .home_content .restaurant_menu_list .type_list.data-v-57280228 {
   display: flex;
   overflow: hidden;
   background-color: #f3f4f7;
   width: 168rpx;
-  padding-top: 140rpx;
+  padding-top: 0;
   box-sizing: border-box;
   padding-bottom: 60rpx;
   position: relative;
@@ -852,6 +852,10 @@
 
 
 /* 搜索/热销入口 */
-.entry_row { display: flex; margin: 20rpx 30rpx 0; }
-.entry_item { flex: 1; background: #fff; border-radius: 16rpx; padding: 26rpx 0; text-align: center; font-size: 30rpx; color: #333; font-weight: bold; margin-right: 20rpx; box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06); }
-.entry_item.entry_hot { margin-right: 0; color: #d81e06; }
+.entry_row { display: flex; margin: 275rpx 350rpx 0rpx 30rpx; position: relative; z-index: 10; }
+.entry_item { flex: 1; background: #fff; border-radius: 20rpx; padding: 14rpx 0; text-align: center; font-size: 30rpx; color: #333; font-weight: bold; white-space: nowrap; margin-right: 20rpx; box-sizing: border-box; box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06); }
+.entry_item.entry_hot { margin-right: 20rpx; color: #d80611; }
+
+/* 拼团 / 预售 入口单独配色 */
+.entry_item.entry_gb { margin-right: 20rpx;background: #fff7ea; color: #d4380d; }
+.entry_item.entry_ps { background: #eaf3de; color: #3b6d11; margin-right: 0; }

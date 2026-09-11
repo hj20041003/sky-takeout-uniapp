@@ -15,3 +15,5 @@ node_modules/
 
 # WeChat DevTools local/private settings (do not publish)
 project.private.config.json
+*.bak
+*.bak2

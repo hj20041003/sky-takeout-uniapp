@@ -17,13 +17,15 @@
     "pages/couponSelect/index",
     "pages/search/index",
     "pages/hotSales/index",
+    "pages/groupBuy/index",
+    "pages/presale/index",
     "pages/refundApply/index",
     "pages/comment/index"
   ],
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "苍穹外卖",
+    "navigationBarTitleText": "小红碗生鲜外送",
     "navigationBarBackgroundColor": "#E95F3C",
     "backgroundColor": "#F8F8F8"
   },

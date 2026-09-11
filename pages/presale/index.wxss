@@ -1,0 +1,32 @@
+.ps-page {
+  min-height: 100vh;
+  background: #f6f5f2;
+  padding: 20rpx 24rpx 60rpx;
+  box-sizing: border-box;
+}
+.ps-loading { text-align: center; color: #999; padding: 60rpx 0; font-size: 26rpx; }
+
+.ps-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+.ps-head { display: flex; align-items: center; justify-content: space-between; }
+.ps-name { font-size: 30rpx; font-weight: 600; color: #333; }
+.ps-tag {
+  font-size: 22rpx; color: #7a5c0a; background: #fff7ea;
+  padding: 4rpx 14rpx; border-radius: 20rpx;
+}
+.ps-spec { font-size: 24rpx; color: #999; margin: 10rpx 0 16rpx; }
+.ps-info { background: #faf9f6; border-radius: 12rpx; padding: 14rpx 18rpx; }
+.ps-row { display: flex; font-size: 24rpx; color: #666; line-height: 40rpx; }
+.ps-hl { color: #0c447c; font-weight: 500; }
+.ps-label { width: 130rpx; color: #999; }
+.ps-price { color: #d4380d; font-size: 38rpx; font-weight: 700; margin-top: 16rpx; }
+.ps-price .ico { font-size: 24rpx; }
+
+.ps-empty { text-align: center; color: #999; padding: 160rpx 0; font-size: 28rpx; }
+.ps-empty-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.ps-empty-sub { font-size: 24rpx; color: #bbb; margin-top: 10rpx; }

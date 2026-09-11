@@ -4506,6 +4506,18 @@ var _index = __webpack_require__(/*! ../../utils/index.js */ 29);function _inter
         url: '/pages/hotSales/index' });
 
     },
+    // 拼团入口（社区生鲜）
+    goGroupBuy: function goGroupBuy() {
+      uni.navigateTo({
+        url: '/pages/groupBuy/index' });
+
+    },
+    // 预售入口（社区生鲜）
+    goPresale: function goPresale() {
+      uni.navigateTo({
+        url: '/pages/presale/index' });
+
+    },
     // 去订单页面
     goOrder: function goOrder() {
       uni.navigateTo({

@@ -1,0 +1,37 @@
+.gb-page {
+  min-height: 100vh;
+  background: #f6f5f2;
+  padding: 20rpx 24rpx 60rpx;
+  box-sizing: border-box;
+}
+.gb-loading { text-align: center; color: #999; padding: 60rpx 0; font-size: 26rpx; }
+
+.gb-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+.gb-top { display: flex; align-items: center; justify-content: space-between; }
+.gb-name { font-size: 30rpx; font-weight: 600; color: #333; }
+.gb-tag {
+  font-size: 22rpx; color: #d4380d; background: #fff1e8;
+  padding: 4rpx 14rpx; border-radius: 20rpx;
+}
+.gb-mid { display: flex; align-items: baseline; justify-content: space-between; margin: 18rpx 0 22rpx; }
+.gb-price { color: #d4380d; font-size: 40rpx; font-weight: 700; }
+.gb-price .ico { font-size: 26rpx; }
+.gb-origin { font-size: 22rpx; color: #d4380d; margin-left: 10rpx; font-weight: 400; }
+.gb-time { font-size: 22rpx; color: #999; }
+.gb-btns { display: flex; }
+.gb-btn {
+  flex: 1; text-align: center; padding: 16rpx 0; border-radius: 32rpx;
+  font-size: 26rpx;
+}
+.gb-btn-open { background: #d4380d; color: #fff; margin-right: 16rpx; }
+.gb-btn-join { background: #fff; color: #d4380d; border: 1rpx solid #d4380d; }
+
+.gb-empty { text-align: center; color: #999; padding: 160rpx 0; font-size: 28rpx; }
+.gb-empty-icon { font-size: 80rpx; margin-bottom: 20rpx; }
+.gb-empty-sub { font-size: 24rpx; color: #bbb; margin-top: 10rpx; }

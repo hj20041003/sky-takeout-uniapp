@@ -1,0 +1,24 @@
+<view class="ps-page">
+  <view wx:if="{{loading}}" class="ps-loading">加载中...</view>
+
+  <block wx:if="{{!loading && list.length > 0}}">
+    <view class="ps-card" wx:for="{{list}}" wx:key="id">
+      <view class="ps-head">
+        <view class="ps-name">{{item.name}}</view>
+        <view class="ps-tag">预售</view>
+      </view>
+      <view class="ps-spec">{{item.spec}}</view>
+      <view class="ps-info">
+        <view class="ps-row"><text class="ps-label">预售期</text><text>{{item.start}} ~ {{item.end}}</text></view>
+        <view class="ps-row ps-hl"><text class="ps-label">预计发货</text><text>{{item.delivery}}</text></view>
+      </view>
+      <view class="ps-price"><text class="ico">￥</text>{{item.price}}</view>
+    </view>
+  </block>
+
+  <view wx:if="{{!loading && list.length === 0}}" class="ps-empty">
+    <view class="ps-empty-icon">🍓</view>
+    <view>暂无预售商品</view>
+    <view class="ps-empty-sub">应季好货上架后会在这里预告</view>
+  </view>
+</view>
